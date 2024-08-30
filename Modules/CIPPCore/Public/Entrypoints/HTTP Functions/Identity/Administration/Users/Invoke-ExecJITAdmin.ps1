@@ -153,7 +153,7 @@ Function Invoke-ExecJITAdmin {
                     value = 'Set-CIPPUserJITAdmin'
                     label = 'Set-CIPPUserJITAdmin'
                 }
-                Parameters    = $Parameters
+                Parameters    = [pscustomobject]$Parameters
                 ScheduledTime = $Request.Body.StartDate
                 PostExecution = @{
                     Webhook = [bool]$Request.Body.PostExecution.Webhook
@@ -171,14 +171,14 @@ Function Invoke-ExecJITAdmin {
             Set-CIPPUserJITAdmin @Parameters
         }
 
-        $DisableTaskBody = @{
+        $DisableTaskBody = [pscustomobject]@{
             TenantFilter  = $Request.Body.TenantFilter
             Name          = "JIT Admin ($($Request.Body.ExpireAction)): $Username"
             Command       = @{
                 value = 'Set-CIPPUserJITAdmin'
                 label = 'Set-CIPPUserJITAdmin'
             }
-            Parameters    = @{
+            Parameters    = [pscustomobject]@{
                 TenantFilter = $Request.Body.TenantFilter
                 User         = @{
                     'UserPrincipalName' = $Username
